@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_medium" />
+    <dimen name="hairline" />
+    <dimen name="margin_small" />
+    <dimen name="margin_xxx_medium" />
+</resources>

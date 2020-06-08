@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MySearch</string>
+    <string name="error_textview">error</string>
+    <string name="reload_button">reaload</string>
+    <string name="button_search" />
+    <string name="search_hint" />
+    <string name="delete_description" />
+    <string name="empty_server_response_on_success" />
+    <string name="undefined_error" />
+</resources>
