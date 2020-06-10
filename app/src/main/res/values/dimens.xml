@@ -4,4 +4,5 @@
     <dimen name="hairline" />
     <dimen name="margin_small" />
     <dimen name="margin_xxx_medium" />
+    <dimen name="bottom_sheet_dialog_corner_radius" />
 </resources>
