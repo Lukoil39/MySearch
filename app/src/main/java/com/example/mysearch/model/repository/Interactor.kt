@@ -1,4 +1,4 @@
-package com.example.mysearch.presentation
+package com.example.mysearch.model.repository
 
 import io.reactivex.Observable
 

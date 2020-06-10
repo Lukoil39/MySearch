@@ -12,8 +12,6 @@ import com.example.mysearch.R
 import com.example.mysearch.util.getEmptyString
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
-import geekbrains.ru.translator.R
-import geekbrains.ru.translator.utils.getEmptyString
 import kotlinx.android.synthetic.main.search_dialog_fragment.*
 
 class SearchDialogFragment : BottomSheetDialogFragment() {

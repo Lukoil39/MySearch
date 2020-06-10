@@ -7,4 +7,7 @@
     <string name="delete_description" />
     <string name="empty_server_response_on_success" />
     <string name="undefined_error" />
+    <string name="search">Search</string>
+    <string name="new_word">New word</string>
+    <string name="x">X</string>
 </resources>
