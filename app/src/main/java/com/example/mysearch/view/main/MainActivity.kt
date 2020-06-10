@@ -12,13 +12,16 @@ import com.example.mysearch.model.data.AppState
 import com.example.mysearch.model.data.DataModel
 import com.example.mysearch.view.base.BaseActivity
 import com.example.mysearch.view.main.adapter.MainAdapter
+import com.example.mysearch.viewmodel.BaseViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<AppState, MainInteractor>() {
-
+class MainActivity(override val modelBase: BaseViewModel<AppState>) : BaseActivity<AppState, MainInteractor>() {
+    // Создаём модель
     override val model: MainViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(MainViewModel::class.java)
     }
+    // Паттерн Observer в действии. Именно с его помощью мы подписываемся на
+    // изменения в LiveData
     private val observer = Observer<AppState> { renderData(it) }
     private var adapter: MainAdapter? = null
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
@@ -35,7 +38,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
             val searchDialogFragment = SearchDialogFragment.newInstance()
             searchDialogFragment.setOnSearchClickListener(object : SearchDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
-                    model.getData(searchWord, true).observe(this@MainActivity, observer)
+                    modelBase.getData(searchWord, true).observe(this@MainActivity, observer)
                 }
             })
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
@@ -79,7 +82,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         showViewError()
         error_textview.text = error ?: getString(R.string.undefined_error)
         reload_button.setOnClickListener {
-            model.getData("hi", true).observe(this, observer)
+            modelBase.getData("hi", true).observe(this, observer)
         }
     }
 

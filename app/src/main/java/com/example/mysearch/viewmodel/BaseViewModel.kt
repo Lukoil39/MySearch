@@ -7,7 +7,7 @@ import com.example.mysearch.model.data.AppState
 import com.example.mysearch.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class ViewModel<T : AppState>(
+abstract class BaseViewModel<T : AppState>(
     protected val liveDataForViewToObserve: MutableLiveData<T> = MutableLiveData(),
     protected val compositeDisposable: CompositeDisposable = CompositeDisposable(),
     protected val schedulerProvider: SchedulerProvider = SchedulerProvider()
