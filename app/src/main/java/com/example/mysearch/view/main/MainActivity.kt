@@ -20,8 +20,6 @@ class MainActivity(override val modelBase: BaseViewModel<AppState>) : BaseActivi
     override val model: MainViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(MainViewModel::class.java)
     }
-    // Паттерн Observer в действии. Именно с его помощью мы подписываемся на
-    // изменения в LiveData
     private val observer = Observer<AppState> { renderData(it) }
     private var adapter: MainAdapter? = null
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
