@@ -1,9 +1,7 @@
 package com.example.mysearch.model.datasourse
 
-import com.example.mysearch.model.data.SearchResult
-import com.example.mysearch.view.base.BaseInterceptor
+import com.example.mysearch.model.data.DataModel
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import geekbrains.ru.translator.model.data.SearchResult
 import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -11,10 +9,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitImplementation :
-    DataSource<List<SearchResult>> {
+class RetrofitImplementation : DataSource<List<DataModel>> {
 
-    override fun getData(word: String): Observable<List<SearchResult>> {
+    override fun getData(word: String): Observable<List<DataModel>> {
         return getService(BaseInterceptor.interceptor).search(word)
     }
 

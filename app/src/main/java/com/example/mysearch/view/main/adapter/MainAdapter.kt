@@ -5,15 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysearch.R
-import com.example.mysearch.model.data.SearchResult
-//import geekbrains.ru.translator.R
-//import geekbrains.ru.translator.model.data.SearchResult
+import com.example.mysearch.model.data.DataModel
 import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
 
-class MainAdapter(private var onListItemClickListener: OnListItemClickListener, private var data: List<SearchResult>) :
+class MainAdapter(private var onListItemClickListener: OnListItemClickListener, private var data: List<DataModel>) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
-    fun setData(data: List<SearchResult>) {
+    fun setData(data: List<DataModel>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -26,7 +24,7 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
     }
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +33,7 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(data: SearchResult) {
+        fun bind(data: DataModel) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.header_textview_recycler_item.text = data.text
                 itemView.description_textview_recycler_item.text = data.meanings?.get(0)?.translation?.translation
@@ -45,11 +43,12 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
         }
     }
 
-    private fun openInNewWindow(listItemData: SearchResult) {
+    private fun openInNewWindow(listItemData: DataModel) {
         onListItemClickListener.onItemClick(listItemData)
     }
 
     interface OnListItemClickListener {
-        fun onItemClick(data: SearchResult)
+        fun onItemClick(data: DataModel)
     }
 }
+

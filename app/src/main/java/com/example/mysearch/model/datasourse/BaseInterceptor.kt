@@ -1,4 +1,4 @@
-package com.example.mysearch.view.base
+package com.example.mysearch.model.datasourse
 
 import okhttp3.Interceptor
 import okhttp3.Response
