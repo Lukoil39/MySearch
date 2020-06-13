@@ -1,11 +1,10 @@
 package com.example.mysearch.model.datasourse
 
-import com.example.mysearch.model.data.DataModel
-import io.reactivex.Observable
+import com.example.mysearch.model.data.SearchResult
 
-class RoomDataBaseImplementation : DataSource<List<DataModel>> {
+class RoomDataBaseImplementation : DataSource<List<SearchResult>> {
 
-    override fun getData(word: String): Observable<List<DataModel>> {
+    override suspend fun getData(word: String): List<SearchResult> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

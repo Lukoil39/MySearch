@@ -5,13 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysearch.R
-import com.example.mysearch.model.data.DataModel
+import com.example.mysearch.model.data.SearchResult
+import com.example.mysearch.utils.convertMeaningsToString
 import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
 
-class MainAdapter(private var onListItemClickListener: OnListItemClickListener, private var data: List<DataModel>) :
+class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
-    fun setData(data: List<DataModel>) {
+    private var data: List<SearchResult> = arrayListOf()
+
+    fun setData(data: List<SearchResult>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -33,22 +36,20 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(data: DataModel) {
+        fun bind(data: SearchResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.header_textview_recycler_item.text = data.text
-                itemView.description_textview_recycler_item.text = data.meanings?.get(0)?.translation?.translation
-
+                itemView.description_textview_recycler_item.text = convertMeaningsToString(data.meanings!!)
                 itemView.setOnClickListener { openInNewWindow(data) }
             }
         }
     }
 
-    private fun openInNewWindow(listItemData: DataModel) {
+    private fun openInNewWindow(listItemData: SearchResult) {
         onListItemClickListener.onItemClick(listItemData)
     }
 
     interface OnListItemClickListener {
-        fun onItemClick(data: DataModel)
+        fun onItemClick(data: SearchResult)
     }
 }
-

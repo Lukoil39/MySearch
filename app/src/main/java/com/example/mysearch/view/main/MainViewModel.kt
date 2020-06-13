@@ -1,49 +1,40 @@
 package com.example.mysearch.view.main
 
 import androidx.lifecycle.LiveData
-import com.example.mysearch.model.data.AppState
-import com.example.mysearch.model.datasourse.DataSourceLocal
-import com.example.mysearch.model.datasourse.DataSourceRemote
-import com.example.mysearch.model.repository.RepositoryImplementation
+import com.example.mysearch.model.data.DataModel
+import com.example.mysearch.utils.parseSearchResults
 import com.example.mysearch.viewmodel.BaseViewModel
-import io.reactivex.observers.DisposableObserver
 
-class MainViewModel(
-    private val interactor: MainInteractor = MainInteractor(
-        RepositoryImplementation(DataSourceRemote()),
-        RepositoryImplementation(DataSourceLocal())
-    )
-) : BaseViewModel<AppState>() {
-    // В этой переменной хранится последнее состояние Activity
-    private var appState: AppState? = null
-    // Переопределяем метод из BaseViewModel
-    override fun getData(word: String, isOnline: Boolean): LiveData<AppState> {
-        compositeDisposable.add(
-            interactor.getData(word, isOnline)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .doOnSubscribe{ liveDataForViewToObserve.value = AppState.Loading(null) }
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-                .subscribeWith(getObserver())
-        )
-        return super.getData(word, isOnline)
+class MainViewModel(private val interactor: MainInteractor) :
+    BaseViewModel<DataModel>() {
+
+    private val liveDataForViewToObserve: LiveData<DataModel> = _mutableLiveData
+
+    fun subscribe(): LiveData<DataModel> {
+        return liveDataForViewToObserve
     }
 
-    private fun getObserver(): DisposableObserver<AppState> {
-        return object : DisposableObserver<AppState>() {
-            // Данные успешно загружены; сохраняем их и передаем во View (через
-            // LiveData). View сама разберётся, как их отображать
-            override fun onNext(state: AppState) {
-                appState = state
-                liveDataForViewToObserve.value = state
-            }
-            // В случае ошибки передаём её в Activity таким же образом через LiveData
-            override fun onError(e: Throwable) {
-                liveDataForViewToObserve.value = AppState.Error(e)
-            }
+    override fun getData(word: String, isOnline: Boolean) {
+        _mutableLiveData.value = DataModel.Loading(null)
+        cancelJob()
+        viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
+    }
 
-            override fun onComplete() {
-            }
-        }
+    //Doesn't have to use withContext for Retrofit call if you use .addCallAdapterFactory(CoroutineCallAdapterFactory()). The same goes for Room
+    private suspend fun startInteractor(word: String, isOnline: Boolean) = withContext(Dispatchers.IO) {
+        _mutableLiveData.postValue(parseSearchResults(interactor.getData(word, isOnline)))
+    }
+
+    override fun handleError(error: Throwable) {
+        _mutableLiveData.postValue(DataModel.Error(error))
+    }
+
+    override fun onCleared() {
+        _mutableLiveData.value = DataModel.Success(null)
+        super.onCleared()
     }
 }
