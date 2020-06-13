@@ -4,7 +4,6 @@ import com.example.mysearch.model.data.DataModel
 import com.example.mysearch.model.data.Meanings
 import com.example.mysearch.model.data.SearchResult
 
-
 fun parseSearchResults(data: DataModel): DataModel {
     val newSearchResults = arrayListOf<SearchResult>()
     when (data) {

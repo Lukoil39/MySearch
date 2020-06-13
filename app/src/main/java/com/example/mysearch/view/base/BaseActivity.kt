@@ -3,6 +3,7 @@ package com.example.mysearch.view.base
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
+
 import com.example.mysearch.R
 import com.example.mysearch.model.data.DataModel
 import com.example.mysearch.utils.network.isOnline
