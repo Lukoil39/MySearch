@@ -1,8 +1,8 @@
-package com.example.mysearch.model.datasourse
+package com.example.mysearch.model.repository
 
 import com.example.mysearch.model.data.DataModel
 
-interface DataSourceLocal<T> : DataSource<T> {
+interface RepositoryLocal<T> : Repository<T> {
 
     suspend fun saveToDB(dataModel: DataModel)
 }

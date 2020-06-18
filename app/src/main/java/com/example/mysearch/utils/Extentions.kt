@@ -1,3 +1,3 @@
-package com.example.mysearch.util
+package com.example.mysearch.utils
 
 fun String.Companion.getEmptyString(): String = ""

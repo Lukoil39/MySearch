@@ -9,11 +9,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.mysearch.R
-import com.example.mysearch.util.getEmptyString
+import com.example.mysearch.utils.getEmptyString
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
-import geekbrains.ru.translator.R
-import geekbrains.ru.translator.utils.getEmptyString
 import kotlinx.android.synthetic.main.search_dialog_fragment.*
 
 class SearchDialogFragment : BottomSheetDialogFragment() {
@@ -26,7 +25,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
     private val textWatcher = object : TextWatcher {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (searchEditText.text != null && !searchEditText.text.toString().isEmpty()) {
+            if (searchEditText.text != null && searchEditText.text.toString().isNotEmpty()) {
                 searchButton.isEnabled = true
                 clearTextImageView.visibility = View.VISIBLE
             } else {

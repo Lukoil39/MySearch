@@ -1,17 +1,14 @@
-package com.example.mysearch.view.main.adapter
+package com.example.mysearch.view.history
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysearch.R
 import com.example.mysearch.model.data.SearchResult
-import com.example.mysearch.utils.convertMeaningsToString
 
-import kotlinx.android.synthetic.main.activity_main_recyclerview_item.view.*
-
-class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
-    RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
+class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolder>() {
 
     private var data: List<SearchResult> = arrayListOf()
 
@@ -23,7 +20,7 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
         return RecyclerItemViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.activity_main_recyclerview_item, parent, false) as View
+                .inflate(R.layout.activity_history_recyclerview_item, parent, false) as View
         )
     }
 
@@ -39,18 +36,11 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
 
         fun bind(data: SearchResult) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
-                itemView.header_textview_recycler_item.text = data.text
-                itemView.description_textview_recycler_item.text = convertMeaningsToString(data.meanings!!)
-                itemView.setOnClickListener { openInNewWindow(data) }
+                itemView.header_history_textview_recycler_item.text = data.text
+                itemView.setOnClickListener {
+                    Toast.makeText(itemView.context, "on click: ${data.text}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
-    }
-
-    private fun openInNewWindow(listItemData: SearchResult) {
-        onListItemClickListener.onItemClick(listItemData)
-    }
-
-    interface OnListItemClickListener {
-        fun onItemClick(data: SearchResult)
     }
 }
