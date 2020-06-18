@@ -15,4 +15,10 @@
         internet connection.
     </string>
     <string name="dialog_title_sorry">Sorry</string>
+    <string name="dialog_tittle_sorry" />
+    <string name="menu_history">Menu_Histoey</string>
+    <string name="history">History</string>
+    <string name="search">Search</string>
+    <string name="new_word">New Word</string>
+    <string name="x">X</string>
 </resources>

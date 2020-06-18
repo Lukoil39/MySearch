@@ -1,14 +1,12 @@
-package com.example.mysearch.view.main
+package com.example.mysearch.view.history
 
 import androidx.lifecycle.LiveData
 import com.example.mysearch.model.data.DataModel
+import com.example.mysearch.utils.parseLocalSearchResults
 import com.example.mysearch.viewmodel.BaseViewModel
-
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class MainViewModel(private val interactor: MainInteractor) :
+class HistoryViewModel(private val interactor: HistoryInteractor) :
     BaseViewModel<DataModel>() {
 
     private val liveDataForViewToObserve: LiveData<DataModel> = _mutableLiveData
@@ -23,9 +21,8 @@ class MainViewModel(private val interactor: MainInteractor) :
         viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
     }
 
-    //Doesn't have to use withContext for Retrofit call if you use .addCallAdapterFactory(CoroutineCallAdapterFactory()). The same goes for Room
-    private suspend fun startInteractor(word: String, isOnline: Boolean) = withContext(Dispatchers.IO) {
-        _mutableLiveData.postValue(parseSearchResults(interactor.getData(word, isOnline)))
+    private suspend fun startInteractor(word: String, isOnline: Boolean) {
+        _mutableLiveData.postValue(parseLocalSearchResults(interactor.getData(word, isOnline)))
     }
 
     override fun handleError(error: Throwable) {
@@ -33,7 +30,7 @@ class MainViewModel(private val interactor: MainInteractor) :
     }
 
     override fun onCleared() {
-        _mutableLiveData.value = DataModel.Success(null)
+        _mutableLiveData.value = DataModel.Success(null)//Set View to original state in onStop
         super.onCleared()
     }
 

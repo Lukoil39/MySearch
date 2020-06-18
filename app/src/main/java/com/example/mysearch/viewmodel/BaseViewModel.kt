@@ -28,4 +28,5 @@ abstract class BaseViewModel<T : DataModel>(
     abstract fun getData(word: String, isOnline: Boolean)
 
     abstract fun handleError(error: Throwable)
+    abstract fun parseSearchResults(data: T): T
 }
